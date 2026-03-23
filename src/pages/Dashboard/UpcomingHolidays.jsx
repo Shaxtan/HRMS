@@ -3,20 +3,20 @@
 /**
  * UpcomingHolidays — panel listing upcoming public/optional holidays.
  *
- * Props:
- *  regions          {string[]}  – list of region options for the select dropdown
- *  selectedRegion   {string}    – currently selected region
- *  onRegionChange   {function}  – callback (newRegion: string) => void
- *  holidayType      {string}    – label on the pill button (e.g. "PUBLIC HOLIDAY")
- *  holidays         {Array<{ day: string|number, month: string, name: string }>}
- *                               – list of holiday objects to render
+ * @param {{
+ *   regions?: string[],
+ *   selectedRegion?: string,
+ *   onRegionChange?: (region: string) => void,
+ *   holidayType?: string,
+ *   holidays?: Array<{ day: string|number, month: string, name: string }>
+ * }} props
  */
 export default function UpcomingHolidays({
   regions = ["HARYANA"],
   selectedRegion = "HARYANA",
   onRegionChange,
   holidayType = "PUBLIC HOLIDAY",
-  holidays = [],
+  holidays = /** @type {Array<{ day: string|number, month: string, name: string }>} */ ([]),
 }) {
   return (
     <div className="bg-white rounded-lg shadow-sm p-5">
