@@ -27,7 +27,7 @@ const attendanceStats = {
 
 const todayDate = "19-03-2026";
 
-const upcomingHolidays = [
+const upcomingHolidays: { day: number; month: string; name: string }[] = [
   { day: 19, month: "Mar", name: "NAVRATRI STARTS" },
 ];
 
@@ -88,12 +88,16 @@ export default function Home() {
           <ChartPanel
             title="Department Wise Employee"
             placeholder="Department wise chart"
-          />
+          >
+            <div />
+          </ChartPanel>
 
           <ChartPanel
             title="Functional Designation (Expertise) Wise Employee"
             placeholder="Functional designation chart"
-          />
+          >
+            <div />
+          </ChartPanel>
         </section>
       </div>
     </>
