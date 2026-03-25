@@ -7,16 +7,11 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PageIcon,
   PieChartIcon,
   PlugInIcon,
-  TableIcon,
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import SidebarWidget from "./SidebarWidget";
-
 const navItems = [
   {
     icon: <GridIcon />,
@@ -31,16 +26,23 @@ const navItems = [
   {
     icon: <PieChartIcon />,
     name: "Payroll",
-    path: "/payroll",
+    subItems: [
+      { name: "Payouts",           path: "/payroll/payouts" },
+      { name: "Pay Consultant",    path: "/payroll/pay-consultant" },
+      { name: "Advances & Loans",  path: "/payroll/advances-loans" },
+      { name: "Reimbursements",    path: "/payroll/reimbursements" },
+      { name: "Multiple Payout",   path: "/payroll/multiple-payout" },
+      { name: "Piece Rate Payout", path: "/payroll/piece-rate-payout" },
+    ],
   },
   {
     name: "Reports",
     icon: <PieChartIcon />,
     subItems: [
-      { name: "Payroll Reports", path: "/reports/payroll" },
-      { name: "Attendance Reports", path: "/reports/attendance" },
+      { name: "Payroll Reports",     path: "/reports/payroll" },
+      { name: "Attendance Reports",  path: "/reports/attendance" },
       { name: "Salary Sheet Export", path: "/reports/salary-sheet" },
-      { name: "Invoice (GST)", path: "/reports/invoice" },
+      { name: "Invoice (GST)",       path: "/reports/invoice" },
     ],
   },
   {
@@ -48,10 +50,10 @@ const navItems = [
     name: "Employees",
     subItems: [
       { name: "All Employees", path: "/employees" },
-      { name: "HR Letter", path: "/employees/hr-letter" },
-      { name: "TDS", path: "/employees/tds" },
-      { name: "Full & Final", path: "/employees/full-and-final" },
-      { name: "Settings", path: "/employees/settings" },
+      { name: "HR Letter",     path: "/employees/hr-letter" },
+      { name: "TDS",           path: "/employees/tds" },
+      { name: "Full & Final",  path: "/employees/full-and-final" },
+      { name: "Settings",      path: "/employees/settings" },
     ],
   },
   {
@@ -124,12 +126,8 @@ const AppSidebar = () => {
   }, [openSubmenu]);
 
   const handleSubmenuToggle = (index, menuType) => {
-    setOpenSubmenu((prevOpenSubmenu) => {
-      if (
-        prevOpenSubmenu &&
-        prevOpenSubmenu.type === menuType &&
-        prevOpenSubmenu.index === index
-      ) {
+    setOpenSubmenu((prev) => {
+      if (prev && prev.type === menuType && prev.index === index) {
         return null;
       }
       return { type: menuType, index };
@@ -185,7 +183,9 @@ const AppSidebar = () => {
               >
                 <span
                   className={`menu-item-icon-size ${
-                    isActive(nav.path) ? "menu-item-icon-active" : "menu-item-icon-inactive"
+                    isActive(nav.path)
+                      ? "menu-item-icon-active"
+                      : "menu-item-icon-inactive"
                   }`}
                 >
                   {nav.icon}
@@ -224,24 +224,20 @@ const AppSidebar = () => {
                       {subItem.name}
                       <span className="flex items-center gap-1 ml-auto">
                         {subItem.new && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge`}
-                          >
+                          <span className={`ml-auto ${
+                            isActive(subItem.path)
+                              ? "menu-dropdown-badge-active"
+                              : "menu-dropdown-badge-inactive"
+                          } menu-dropdown-badge`}>
                             new
                           </span>
                         )}
                         {subItem.pro && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge`}
-                          >
+                          <span className={`ml-auto ${
+                            isActive(subItem.path)
+                              ? "menu-dropdown-badge-active"
+                              : "menu-dropdown-badge-inactive"
+                          } menu-dropdown-badge`}>
                             pro
                           </span>
                         )}
@@ -259,7 +255,7 @@ const AppSidebar = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200
         ${
           isExpanded || isMobileOpen
             ? "w-[250px]"
